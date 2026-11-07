@@ -1,0 +1,489 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Story ❤️</title>
+
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#45234d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Our Story">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #17152b, #45234d);
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.page {
+    min-height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 35px 20px;
+    animation: appear .7s ease;
+}
+
+#firstPage { display: flex; }
+
+.heart {
+    font-size: 50px;
+    animation: heartbeat 1.2s infinite;
+}
+
+h1 { color: #ffb6d5; font-size: 36px; }
+
+p {
+    color: #e5d8e8;
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 600px;
+}
+
+button {
+    background: #d85b9b;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+    transition: .3s;
+}
+
+button:hover {
+    background: #ff80bd;
+    transform: scale(1.06);
+}
+
+.timeline {
+    width: 100%;
+    max-width: 500px;
+    border-left: 2px solid #ff80bd;
+    padding-left: 20px;
+    text-align: left;
+}
+
+.event {
+    background: rgba(255,255,255,.08);
+    padding: 15px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.gallery img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+#imageViewer {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.92);
+    z-index: 10;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+}
+
+#largeImage {
+    max-width: 95%;
+    max-height: 75vh;
+    border-radius: 15px;
+}
+
+.counter-box {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,182,213,.3);
+    border-radius: 20px;
+    padding: 25px;
+    font-size: 20px;
+    line-height: 2;
+}
+
+.reason-card {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,182,213,.4);
+    border-radius: 25px;
+    padding: 35px 20px;
+    width: 100%;
+    max-width: 450px;
+    min-height: 190px;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.reason-number {
+    color: #ff80bd;
+    font-size: 17px;
+    margin-bottom: 18px;
+}
+
+.reason-text {
+    color: white;
+    font-size: 23px;
+    font-weight: bold;
+    line-height: 1.6;
+}
+
+.reason-progress {
+    width: 100%;
+    max-width: 450px;
+    height: 8px;
+    background: rgba(255,255,255,.15);
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 10px auto;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 1%;
+    background: #ff80bd;
+    transition: width .4s;
+}
+
+.reason-card.change { animation: reasonAppear .45s ease; }
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes reasonAppear {
+    from { opacity: 0; transform: translateY(12px) scale(.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media(max-width:450px) {
+    h1 { font-size: 29px; }
+    .reason-text { font-size: 20px; }
+}
+</style>
+</head>
+
+<body>
+
+<section class="page" id="firstPage">
+    <div class="heart">❤️</div>
+    <h1>Our Story</h1>
+    <p>A little world made of memories, moments and love.</p>
+    <button onclick="startJourney()">Start Our Journey</button>
+</section>
+
+<section class="page" id="secondPage">
+    <div class="heart">💗</div>
+    <h1>Our Little World</h1>
+    <p>Every memory has a place in our story.</p>
+    <button onclick="showTimeline()">Our Timeline</button>
+    <button onclick="showGallery()">Our Gallery</button>
+    <button onclick="showCounter()">Our Time Together</button>
+    <button onclick="showReasons()">100 Reasons</button>
+    <button onclick="goBack()">Home</button>
+</section>
+
+<section class="page" id="timelinePage">
+    <h1>Our Timeline</h1>
+    <p>Some moments become unforgettable.</p>
+    <div class="timeline">
+        <div class="event">
+            <h3>✨ The Beginning</h3>
+            <p>The first chapter of our story.</p>
+        </div>
+        <div class="event">
+            <h3>💗 A Special Moment</h3>
+            <p>A memory worth keeping forever.</p>
+        </div>
+        <div class="event">
+            <h3>🌙 More Memories</h3>
+            <p>And our story continues...</p>
+        </div>
+    </div>
+    <button onclick="backToSecond()">Back</button>
+</section>
+
+<section class="page" id="galleryPage">
+    <h1>Our Gallery</h1>
+    <p>A collection of beautiful moments.</p>
+    <div class="gallery">
+        <img src="https://picsum.photos/400/300?random=1" onclick="openImage(this.src)" alt="Memory 1">
+        <img src="https://picsum.photos/400/300?random=2" onclick="openImage(this.src)" alt="Memory 2">
+        <img src="https://picsum.photos/400/300?random=3" onclick="openImage(this.src)" alt="Memory 3">
+        <img src="https://picsum.photos/400/300?random=4" onclick="openImage(this.src)" alt="Memory 4">
+    </div>
+    <button onclick="backToSecond()">Back</button>
+</section>
+
+<section class="page" id="counterPage">
+    <h1>Our Time Together</h1>
+    <p>Every second is another moment in our story.</p>
+    <div class="counter-box">
+        <div><span id="days">0</span> Days</div>
+        <div><span id="hours">0</span> Hours</div>
+        <div><span id="minutes">0</span> Minutes</div>
+        <div><span id="seconds">0</span> Seconds</div>
+    </div>
+    <button onclick="backToSecond()">Back</button>
+</section>
+
+<section class="page" id="reasonsPage">
+    <div class="heart">💗</div>
+    <h1>100 Reasons Why I Love You</h1>
+    <p>One hundred little reasons, one beautiful story.</p>
+    <div class="reason-card" id="reasonCard">
+        <div class="reason-number" id="reasonNumber">Reason 1 of 100</div>
+        <div class="reason-text" id="reasonText"></div>
+    </div>
+    <div class="reason-progress">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <button onclick="previousReason()">Previous</button>
+    <button onclick="nextReason()">Next Reason ❤️</button>
+    <button onclick="backToSecond()">Back</button>
+</section>
+
+<div id="imageViewer" onclick="closeImage()">
+    <img id="largeImage" src="" alt="Large Memory">
+    <button onclick="closeImage()">Close ✖</button>
+</div>
+
+<script>
+const startDate = new Date(2025, 0, 1, 0, 0, 0);
+
+const reasons = [
+"Because you make ordinary moments special.",
+"Because your smile brightens the day.",
+"Because you make me feel understood.",
+"Because you bring happiness into my life.",
+"Because you are unique.",
+"Because of your beautiful heart.",
+"Because you make me laugh.",
+"Because you inspire me to be better.",
+"Because you make little things meaningful.",
+"Because you have your own special way.",
+"Because you make life more beautiful.",
+"Because you are thoughtful.",
+"Because you care about the people around you.",
+"Because you make conversations interesting.",
+"Because you have a wonderful personality.",
+"Because you make memories unforgettable.",
+"Because you are kind.",
+"Because you have a special place in my heart.",
+"Because you make me feel appreciated.",
+"Because you are honest.",
+"Because you have beautiful dreams.",
+"Because you never stop being yourself.",
+"Because your happiness matters to me.",
+"Because you make me smile without trying.",
+"Because you are full of surprises.",
+"Because you make every day different.",
+"Because you have a lovely sense of humor.",
+"Because you notice the little things.",
+"Because you are strong in your own way.",
+"Because you have a beautiful soul.",
+"Because you make silence comfortable.",
+"Because you are someone worth knowing.",
+"Because you make simple moments memorable.",
+"Because you have a special laugh.",
+"Because you are full of life.",
+"Because you make me see things differently.",
+"Because you have your own beautiful style.",
+"Because you are caring.",
+"Because you make the world feel warmer.",
+"Because you are patient.",
+"Because you have a curious mind.",
+"Because you make me appreciate the present.",
+"Because you are full of potential.",
+"Because you make every story better.",
+"Because you are a wonderful person.",
+"Because you make me believe in beautiful moments.",
+"Because you have a gentle side.",
+"Because you are brave.",
+"Because you make people feel special.",
+"Because you are impossible to replace.",
+"Because you have a heart full of kindness.",
+"Because you bring color to ordinary days.",
+"Because you are fun to be around.",
+"Because you make me value memories.",
+"Because you are sincere.",
+"Because you have a lovely imagination.",
+"Because you make the smallest things count.",
+"Because you are always learning.",
+"Because you have your own way of thinking.",
+"Because you make me feel lucky to know you.",
+"Because you are a beautiful part of my story.",
+"Because you have a wonderful energy.",
+"Because you make every little moment matter.",
+"Because you are thoughtful in unexpected ways.",
+"Because you have a smile worth remembering.",
+"Because you make the future feel full of possibilities.",
+"Because you are more than words can describe.",
+"Because you make me appreciate who you are.",
+"Because you have a beautiful way of expressing yourself.",
+"Because you are one of a kind.",
+"Because you make every memory brighter.",
+"Because you are worth celebrating.",
+"Because you bring joy in your own way.",
+"Because you have a special place in this world.",
+"Because you make life interesting.",
+"Because you are wonderfully imperfect.",
+"Because you have so much to offer.",
+"Because you make me grateful for little things.",
+"Because you are someone I admire.",
+"Because you make every chapter meaningful.",
+"Because you have a beautiful mind.",
+"Because you make me look forward to tomorrow.",
+"Because you are a gift to the people who know you.",
+"Because you make the ordinary feel extraordinary.",
+"Because you are full of little details I appreciate.",
+"Because you have a warmth that is your own.",
+"Because you make memories worth keeping.",
+"Because you are always becoming a better version of yourself.",
+"Because you make this story special.",
+"Because you are someone I respect.",
+"Because you make every page worth reading.",
+"Because your presence makes a difference.",
+"Because you have a heart worth appreciating.",
+"Because you are beautifully yourself.",
+"Because you make me believe in good things.",
+"Because there is always something new to appreciate about you.",
+"Because you are a wonderful chapter in my life.",
+"Because you are you ❤️"
+];
+
+let currentReason = 0;
+
+function startJourney() {
+    firstPage.style.display = "none";
+    secondPage.style.display = "flex";
+}
+
+function goBack() {
+    secondPage.style.display = "none";
+    firstPage.style.display = "flex";
+}
+
+function backToSecond() {
+    timelinePage.style.display = "none";
+    galleryPage.style.display = "none";
+    counterPage.style.display = "none";
+    reasonsPage.style.display = "none";
+    secondPage.style.display = "flex";
+}
+
+function showTimeline() {
+    secondPage.style.display = "none";
+    timelinePage.style.display = "flex";
+}
+
+function showGallery() {
+    secondPage.style.display = "none";
+    galleryPage.style.display = "flex";
+}
+
+function showCounter() {
+    secondPage.style.display = "none";
+    counterPage.style.display = "flex";
+    updateCounter();
+}
+
+function showReasons() {
+    secondPage.style.display = "none";
+    reasonsPage.style.display = "flex";
+    currentReason = 0;
+    updateReason();
+}
+
+function openImage(imageSource) {
+    largeImage.src = imageSource;
+    imageViewer.style.display = "flex";
+}
+
+function closeImage() {
+    imageViewer.style.display = "none";
+}
+
+function updateCounter() {
+    const now = new Date();
+    const difference = now - startDate;
+    const totalSeconds = Math.max(0, Math.floor(difference / 1000));
+
+    document.getElementById("days").textContent = Math.floor(totalSeconds / 86400);
+    document.getElementById("hours").textContent = Math.floor((totalSeconds % 86400) / 3600);
+    document.getElementById("minutes").textContent = Math.floor((totalSeconds % 3600) / 60);
+    document.getElementById("seconds").textContent = totalSeconds % 60;
+}
+
+setInterval(updateCounter, 1000);
+
+function nextReason() {
+    currentReason = (currentReason + 1) % reasons.length;
+    updateReason();
+}
+
+function previousReason() {
+    currentReason = (currentReason - 1 + reasons.length) % reasons.length;
+    updateReason();
+}
+
+function updateReason() {
+    const card = document.getElementById("reasonCard");
+
+    document.getElementById("reasonNumber").textContent =
+        "Reason " + (currentReason + 1) + " of 100";
+
+    document.getElementById("reasonText").textContent =
+        reasons[currentReason];
+
+    document.getElementById("progressFill").style.width =
+        ((currentReason + 1) / 100 * 100) + "%";
+
+    card.classList.remove("change");
+    void card.offsetWidth;
+    card.classList.add("change");
+}
+
+// REGISTER THE SERVICE WORKER
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker.register("./sw.js")
+            .then(() => console.log("App is ready!"))
+            .catch(error => console.log("Service Worker error:", error));
+    });
+}
+</script>
+
+</body>
+</html>
